@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "Learn Express",
+    "content": "Practice routes"
+  },
+  {
+    "id": 2,
+    "title": "Learn Async Await",
+    "content": "Practice promises"
+  }
+]

@@ -8,5 +8,9 @@
     "id": 2,
     "title": "Learn Async Await",
     "content": "Practice promises"
+  },
+  {
+    "title": "Learn Git",
+    "content": "Practice commits"
   }
 ]

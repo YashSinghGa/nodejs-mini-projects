@@ -3,6 +3,9 @@ const express = require("express");
 
 const app = express();
 
+// Middleware
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Notes API is running");
 });
@@ -37,12 +40,32 @@ app.get("/notes/:id", (req, res) => {
   });
 });
 
-app.all("*", (req, res) => {
-  res.status(404).json({
-    status: "fail",
-    message: `Can't find ${req.originalUrl} on this server`,
+// Create New Note
+app.post("/notes", (req, res) => {
+  const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
+
+  const newNote = {
+    id: notes.length + 1,
+    title: req.body.title,
+    content: req.body.content,
+  };
+
+  notes.push(newNote);
+
+  fs.writeFileSync("./data/notes.json", JSON.stringify(notes, null, 2));
+
+  res.status(201).json({
+    status: "success",
+    data: newNote,
   });
 });
+
+// app.all("*", (req, res) => {
+//   res.status(404).json({
+//     status: "fail",
+//     message: `Can't find ${req.originalUrl} on this server`,
+//   });
+// });
 
 app.listen(8000, () => {
   console.log("Server running on port 8000");

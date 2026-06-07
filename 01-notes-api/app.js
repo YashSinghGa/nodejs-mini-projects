@@ -6,10 +6,12 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+// Home Route
 app.get("/", (req, res) => {
   res.send("Notes API is running");
 });
 
+// Get All Notes
 app.get("/notes", (req, res) => {
   const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
 
@@ -20,6 +22,7 @@ app.get("/notes", (req, res) => {
   });
 });
 
+// Get Note By ID
 app.get("/notes/:id", (req, res) => {
   const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
 
@@ -45,7 +48,7 @@ app.post("/notes", (req, res) => {
   const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
 
   const newNote = {
-    id: notes.length + 1,
+    id: notes.length > 0 ? notes[notes.length - 1].id + 1 : 1,
     title: req.body.title,
     content: req.body.content,
   };
@@ -60,13 +63,40 @@ app.post("/notes", (req, res) => {
   });
 });
 
-// app.all("*", (req, res) => {
-//   res.status(404).json({
-//     status: "fail",
-//     message: `Can't find ${req.originalUrl} on this server`,
-//   });
-// });
+// Delete Note
+app.delete("/notes/:id", (req, res) => {
+  const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
+  console.log("GET NOTE BY ID ROUTE HIT");
+  const id = Number(req.params.id);
 
+  const noteExists = notes.find((el) => el.id === id);
+
+  if (!noteExists) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Note not found",
+    });
+  }
+
+  const filteredNotes = notes.filter((el) => el.id !== id);
+
+  fs.writeFileSync("./data/notes.json", JSON.stringify(filteredNotes, null, 2));
+
+  res.status(200).json({
+    status: "success",
+    message: "Note deleted successfully",
+  });
+});
+
+// 404 Route
+app.all("/*splat", (req, res) => {
+  res.status(404).json({
+    status: "fail",
+    message: `Can't find ${req.originalUrl} on this server`,
+  });
+});
+
+// Server
 app.listen(8000, () => {
   console.log("Server running on port 8000");
 });

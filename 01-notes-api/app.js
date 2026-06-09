@@ -63,6 +63,34 @@ app.post("/notes", (req, res) => {
   });
 });
 
+//
+app.patch("/notes/:id", (req, res) => {
+  const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
+
+  const id = Number(req.params.id);
+
+  const noteIndex = notes.findIndex((el) => el.id === id);
+
+  if (noteIndex === -1) {
+    return res.status(404).json({
+      status: "fail",
+      message: "Note not found",
+    });
+  }
+
+  notes[noteIndex] = {
+    ...notes[noteIndex],
+    ...req.body,
+  };
+
+  fs.writeFileSync("./data/notes.json", JSON.stringify(notes, null, 2));
+
+  res.status(200).json({
+    status: "success",
+    data: notes[noteIndex],
+  });
+});
+
 // Delete Note
 app.delete("/notes/:id", (req, res) => {
   const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));

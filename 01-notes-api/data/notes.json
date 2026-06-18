@@ -1,31 +1,12 @@
 [
   {
     "id": 1,
-    "title": "Updated Note",
+    "title": "Learn Express",
     "content": "Practice routes"
   },
   {
     "id": 2,
     "title": "Learn Async Await",
     "content": "Practice promises"
-  },
-  {
-    "title": "Learn Git",
-    "content": "Practice commits"
-  },
-  {
-    "id": null,
-    "title": "Learn Git",
-    "content": "Practice commits"
-  },
-  {
-    "id": 1,
-    "title": "Learn Git",
-    "content": "Practice commits"
-  },
-  {
-    "id": 2,
-    "title": "Learn Git",
-    "content": "Practice commits"
   }
 ]

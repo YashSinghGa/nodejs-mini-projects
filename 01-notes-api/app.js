@@ -2,24 +2,15 @@ const fs = require("fs");
 const express = require("express");
 
 const app = express();
+const notesRouter = require("./routes/notesRoutes");
 
 // Middleware
 app.use(express.json());
+app.use("/notes", notesRouter);
 
 // Home Route
 app.get("/", (req, res) => {
   res.send("Notes API is running");
-});
-
-// Get All Notes
-app.get("/notes", (req, res) => {
-  const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
-
-  res.status(200).json({
-    status: "success",
-    results: notes.length,
-    data: notes,
-  });
 });
 
 // Get Note By ID

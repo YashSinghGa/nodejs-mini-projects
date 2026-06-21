@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 // Get Note By ID
-app.get("/notes/:id", (req, res) => {
+/* app.get("/notes/:id", (req, res) => {
   const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
 
   const id = Number(req.params.id);
@@ -32,7 +32,7 @@ app.get("/notes/:id", (req, res) => {
     status: "success",
     data: note,
   });
-});
+}); */
 
 // Create New Note
 app.post("/notes", (req, res) => {

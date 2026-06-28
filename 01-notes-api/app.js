@@ -13,28 +13,7 @@ app.get("/", (req, res) => {
   res.send("Notes API is running");
 });
 
-// Get Note By ID
-/* app.get("/notes/:id", (req, res) => {
-  const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
-
-  const id = Number(req.params.id);
-
-  const note = notes.find((el) => el.id === id);
-
-  if (!note) {
-    return res.status(404).json({
-      status: "fail",
-      message: "Note not found",
-    });
-  }
-
-  res.status(200).json({
-    status: "success",
-    data: note,
-  });
-}); */
-
-// Create New Note
+/* // Create New Note
 app.post("/notes", (req, res) => {
   const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
 
@@ -52,9 +31,8 @@ app.post("/notes", (req, res) => {
     status: "success",
     data: newNote,
   });
-});
+}); */
 
-//
 app.patch("/notes/:id", (req, res) => {
   const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
 
@@ -85,7 +63,6 @@ app.patch("/notes/:id", (req, res) => {
 // Delete Note
 app.delete("/notes/:id", (req, res) => {
   const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
-  console.log("GET NOTE BY ID ROUTE HIT");
   const id = Number(req.params.id);
 
   const noteExists = notes.find((el) => el.id === id);

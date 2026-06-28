@@ -33,4 +33,23 @@ router.get("/:id", (req, res) => {
   });
 });
 
+// Create New Note
+router.post("/", (req, res) => {
+  const notes = JSON.parse(fs.readFileSync("./data/notes.json", "utf-8"));
+
+  const newNote = {
+    id: notes.length > 0 ? notes[notes.length - 1].id + 1 : 1,
+    title: req.body.title,
+    content: req.body.content,
+  };
+
+  notes.push(newNote);
+
+  fs.writeFileSync("./data/notes.json", JSON.stringify(notes, null, 2));
+
+  res.status(201).json({
+    status: "success",
+    data: newNote,
+  });
+});
 module.exports = router;
